@@ -1,4 +1,12 @@
-# Tauri + React + Typescript
+# Tauri + React + Typescript + Python
+
+tauri と React と Python を組み合わせたプロジェクトサンプル
+
+## 概要
+
+tauriにはバイナリファイルを組み込む機能がある。この機能を利用することで、フロントはWeb技術、バックエンドはRust、補助的な処理はPythonなど、複数の言語を組み合わせたアプリケーションを作成することができる。
+
+## プロジェクト作成
 
 プロジェクトの作成。今回作成するプロジェクト名は`tauri-with-python-and-react`とする。
 
@@ -33,6 +41,8 @@ tauriの起動
 ```bash
 pnpm tauri dev
 ```
+
+## Pythonの追加
 
 pythonのプロジェクトを追加する。pythonのプロジェクト管理にはpoetryを採用する。
 
