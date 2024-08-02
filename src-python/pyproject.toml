@@ -6,8 +6,13 @@ authors = ["Ouvill <contact@ouvill.net>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.12,<3.13"
 
+[tool.poetry.group.dev.dependencies]
+pyinstaller = "^6.9.0"
+
+[tool.poetry.scripts]
+build = "src_python.pyinstaller:build"
 
 [build-system]
 requires = ["poetry-core"]
