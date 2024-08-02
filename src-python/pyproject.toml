@@ -12,7 +12,7 @@ python = ">=3.12,<3.13"
 pyinstaller = "^6.9.0"
 
 [tool.poetry.scripts]
-build = "src_python.pyinstaller:build"
+build = "src_python.pyinstaller:main"
 
 [build-system]
 requires = ["poetry-core"]

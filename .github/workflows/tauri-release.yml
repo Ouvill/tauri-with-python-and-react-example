@@ -87,7 +87,7 @@ jobs:
       - name: build python-app
         run: |
           cd src-python
-          poetry run build
+          poetry run build ${{ matrix.args }}
 
       - uses: tauri-apps/tauri-action@v0
         env:
