@@ -12,6 +12,11 @@ function App() {
     setGreetMsg(await invoke("greet", { name }));
   }
 
+  async function runPython() {
+    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+    await invoke("run_python_app");
+  }
+
   return (
     <div className="container">
       <h1>Welcome to Tauri!</h1>
@@ -46,6 +51,7 @@ function App() {
       </form>
 
       <p>{greetMsg}</p>
+      <button onClick={runPython}>Run Python</button>
     </div>
   );
 }
