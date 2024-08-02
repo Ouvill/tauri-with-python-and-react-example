@@ -34,3 +34,5 @@ def build():
         "--name", str(app_name_with_target_triple),
         "--console"
     ])
+
+    print(f"Built {app_name_with_target_triple}")
