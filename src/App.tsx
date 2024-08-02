@@ -2,6 +2,7 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
+import { Command } from "@tauri-apps/api/shell";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -15,6 +16,12 @@ function App() {
   async function runPython() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     await invoke("run_python_app");
+  }
+
+  async function directRunPython() {
+    const command = Command.sidecar("binaries/python-app");
+    const output = await command.execute();
+    console.log(output);
   }
 
   return (
@@ -51,7 +58,8 @@ function App() {
       </form>
 
       <p>{greetMsg}</p>
-      <button onClick={runPython}>Run Python</button>
+      <button onClick={runPython}>Run Python from Rust</button>
+      <button onClick={directRunPython}>Run Python from javascript</button>
     </div>
   );
 }
