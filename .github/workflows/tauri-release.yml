@@ -21,8 +21,11 @@ jobs:
             args: ''
           - platform: 'windows-latest'
             args: ''
-
+    defaults:
+      run:
+        shell: bash
     runs-on: ${{ matrix.platform }}
+
     steps:
       - uses: actions/checkout@v4
 
