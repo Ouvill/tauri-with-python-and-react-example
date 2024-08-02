@@ -114,3 +114,69 @@ poetry run build
 ```
 
 ビルドが成功すると、`src-tauri/binaries`フォルダーに`python-app-x86_64-unknown-linux-gnu`のようなファイルが作成される。windowsやmacは別の名前になる。
+
+## tauriにpythonのバイナリを組み込む
+
+`src-tauri/touri.conf.json`に設定を追記する。
+
+```json
+{ 
+  "tauri": {
+    "bundle": {
+      "externalBin": [
+        "binaries/python-app"
+      ]
+    }
+    "allowlist": {
+      "shell": {
+        "sidecar": true,
+        "scope": [
+          {
+            "name": "binaries/python-app",
+            "sidecar": true
+          }
+        ]
+      }
+    },
+  }, 
+} 
+```
+
+## rustからpythonを呼び出す
+
+以下のコードを`src-tauri/src-tauri/src/main.rs`に追加する。
+
+```rust
+#[tauri::command]
+fn run_python_app() {
+    // sidecarを実行するコード。python-appはtauri.conf.jsonで設定したファイル名
+    let output = Command::new_sidecar("python-app")
+        .expect("failed to create sidecar command")
+        .output()
+        .expect("failed to spawn sidecar command");
+
+    if output.status.success() {
+        println!("stdout: {}", output.stdout);
+    } else {
+        println!("stderr: {}", output.stderr);
+    }
+}
+
+fn main() {
+    tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![greet, run_python_app])
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
+}
+```
+
+
+## JavaScriptからPythonを呼び出す
+
+```javascript
+import { Command } from '@tauri-apps/api/shell'
+
+// `binaries/python-app`はtauri.conf.jsonで設定した値 `tauri.conf.json > tauri > bundle > externalBin`
+const command = Command.sidecar("binaries/python-app");
+const output = await command.execute();
+```
